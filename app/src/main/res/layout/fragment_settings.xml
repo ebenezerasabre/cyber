@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="@color/black"
+    >
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/andika"
+        android:text="back"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@+id/backArrow"
+        app:layout_constraintStart_toEndOf="@+id/backArrow"
+        app:layout_constraintTop_toTopOf="@+id/backArrow"
+        android:textColor="@color/white"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/light_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/andika"
+        android:text="Headlight"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/light_tail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/andika"
+        android:text="taillight"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/light_head"
+        app:layout_constraintStart_toStartOf="@+id/light_head"
+        app:layout_constraintTop_toBottomOf="@+id/light_head" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/light_interior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:fontFamily="@font/andika"
+        android:text="interior"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/light_tail"
+        app:layout_constraintStart_toStartOf="@+id/light_tail"
+        app:layout_constraintTop_toBottomOf="@+id/light_tail" />
+
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/headSegment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="90dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tailSegment"
+        app:layout_constraintStart_toEndOf="@+id/light_head"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sc_border_width="2dp"
+        app:sc_checked_text_color="@color/black"
+        app:sc_corner_radius="8dp"
+        app:sc_tint_color="@color/gray"
+
+        >
+
+        <RadioButton
+            android:id="@+id/head1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="ON"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/head2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="OFF"
+            android:textAllCaps="true"
+            android:textSize="18sp" />
+
+
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/tailSegment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="90dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/interiorSegment"
+        app:layout_constraintEnd_toEndOf="@+id/headSegment"
+        app:layout_constraintStart_toStartOf="@+id/headSegment"
+        app:layout_constraintTop_toBottomOf="@+id/headSegment"
+        app:sc_border_width="2dp"
+        app:sc_checked_text_color="@color/black"
+        app:sc_corner_radius="8dp"
+        app:sc_tint_color="@color/gray">
+
+        <RadioButton
+            android:id="@+id/tail1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="ON"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/tail2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="OFF"
+            android:textAllCaps="true"
+            android:textSize="18sp" />
+
+
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/interiorSegment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tailSegment"
+        app:layout_constraintStart_toStartOf="@+id/tailSegment"
+        app:layout_constraintTop_toBottomOf="@+id/tailSegment"
+        app:sc_border_width="2dp"
+        app:sc_checked_text_color="@color/black"
+        app:sc_corner_radius="8dp"
+        app:sc_tint_color="@color/gray">
+
+        <RadioButton
+            android:id="@+id/interior1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="ON"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/interior2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="8dp"
+            android:text="OFF"
+            android:textAllCaps="true"
+            android:textSize="18sp" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/headCircle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/ic_baseline_add_circle_outline_24"
+        app:layout_constraintStart_toEndOf="@+id/headSegment"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/headCircle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginTop="90dp"-->
+<!--        android:src="@drawable/ic_baseline_add_circle_outline_24"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/headSegment"-->
+<!--        app:layout_constraintTop_toTopOf="parent" -->
+<!--        -->
+<!--        />-->
+
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/tailCircle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_add_circle_outline_24"
+        app:layout_constraintEnd_toEndOf="@+id/headCircle"
+        app:layout_constraintStart_toStartOf="@+id/headCircle"
+        app:layout_constraintTop_toBottomOf="@+id/headCircle" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/tailCircle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:src="@drawable/ic_baseline_add_circle_outline_24"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/headCircle"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/headCircle"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/headCircle" />-->
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/interiorCircle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tailCircle"
+        app:layout_constraintStart_toStartOf="@+id/tailCircle"
+        app:layout_constraintTop_toBottomOf="@+id/tailCircle" />
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/interiorCircle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:src="@drawable/ic_baseline_add_circle_outline_24"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/tailCircle"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tailCircle"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tailCircle" />-->
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/activeSuspension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="430dp"
+        android:fontFamily="@font/andika"
+        android:text="active suspension"
+
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fr"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/sus_plus"
+        app:layout_constraintStart_toEndOf="@+id/front"
+        app:layout_constraintTop_toTopOf="@+id/front"
+        app:layout_constraintBottom_toTopOf="@+id/rr"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/front"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/andika"
+        android:text="FRONT"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/activeSuspension"
+        app:layout_constraintTop_toBottomOf="@+id/activeSuspension" />
+
+    <ImageView
+        android:id="@+id/rr"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/sus_plus"
+        app:layout_constraintStart_toEndOf="@+id/REAR"
+        app:layout_constraintTop_toBottomOf="@+id/fr"
+        app:layout_constraintEnd_toEndOf="@+id/fr"
+        />
+
+    <ImageView
+        android:id="@+id/rl"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/sus_minus"
+        app:layout_constraintEnd_toStartOf="@+id/REAR"
+        app:layout_constraintTop_toBottomOf="@+id/fl"
+        app:layout_constraintStart_toStartOf="@+id/fl"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/REAR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/andika"
+        android:text="rear"
+        android:textAllCaps="true"
+
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/front"
+
+        app:layout_constraintTop_toBottomOf="@+id/front" />
+
+    <ImageView
+        android:id="@+id/fl"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/sus_minus"
+        app:layout_constraintEnd_toStartOf="@+id/front"
+        app:layout_constraintTop_toTopOf="@+id/front"
+        app:layout_constraintBottom_toTopOf="@+id/rl"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

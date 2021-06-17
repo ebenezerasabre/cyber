@@ -32,4 +32,8 @@ public class RemoteControl {
     public void heartbeat() {
         this.bleController.sendData(createControlWord(HEARTBEAT));
     }
+
+    public void sendCommandStr(String input){
+        this.bleController.sendCommandStr(input);
+    }
 }

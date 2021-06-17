@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import asabre.com.cyber.viewmodels.HomeViewModel;
+import asabre.com.cyber.viewmodels.SettingsViewModel;
+
 import static android.bluetooth.BluetoothProfile.GATT;
 
 public class BLEController {
@@ -33,6 +38,8 @@ public class BLEController {
     private ArrayList<BLEControllerListener> listeners = new ArrayList<>();
     private HashMap<String, BluetoothDevice> devices = new HashMap<>();
 
+
+
     private BLEController(Context ctx) {
         this.bluetoothManager = (BluetoothManager) ctx.getSystemService(Context.BLUETOOTH_SERVICE);
     }
@@ -40,7 +47,6 @@ public class BLEController {
     public static BLEController getInstance(Context ctx) {
         if(null == instance)
             instance = new BLEController((ctx));
-
         return instance;
     }
 
@@ -59,6 +65,11 @@ public class BLEController {
         scanner.startScan(bleCallback);
     }
 
+
+//    private void callListView(){
+//        void
+//    }
+
     private ScanCallback bleCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
@@ -66,6 +77,8 @@ public class BLEController {
             Log.d(TAG, "onScanResults: " + device);
             if(!devices.containsKey(device.getAddress()) && isThisTheDevice(device)) {
                 deviceFound(device);
+
+
             }
         }
 
@@ -91,20 +104,36 @@ public class BLEController {
 
     private void deviceFound(BluetoothDevice device) {
         this.devices.put(device.getAddress(), device);
+
+
         fireDeviceFound(device);
     }
+
+
+    private void emitDeviceConnected(){
+        HomeViewModel.init();
+        SettingsViewModel.init();
+        HomeViewModel.connected.postValue(true);
+        MainActivity.deviceIsConnected = true;
+        SettingsActivity.deviceIsConnected = true;
+    }
+
 
     public void connectToDevice(String address) {
         this.device = this.devices.get(address);
         this.scanner.stopScan(this.bleCallback);
         Log.d("[BLE]", "connect to device " + device.getAddress());
         this.bluetoothGatt = device.connectGatt(null, false, this.bleConnectCallback);
+
     }
 
     private final BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
+
+                emitDeviceConnected();
+
                 Log.d("[BLE]", "start service discovery " + bluetoothGatt.discoverServices());
             }else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 btGattChar = null;
@@ -156,6 +185,11 @@ public class BLEController {
 
     public void sendData(byte [] data) {
         this.btGattChar.setValue(data);
+        bluetoothGatt.writeCharacteristic(this.btGattChar);
+    }
+
+    public void sendCommandStr(String input){
+        this.btGattChar.setValue(input);
         bluetoothGatt.writeCharacteristic(this.btGattChar);
     }
 
