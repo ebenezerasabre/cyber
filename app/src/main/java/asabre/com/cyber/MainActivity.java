@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,18 +47,17 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
     private RadioButton buttonNormal;
     private RadioButton buttonLudacris;
-    private TextView mode;
     private SeekBar leftSeekBar;
-    private TextView seekBarLeftText;
+
 
     private RadioButton segment_r;
     private RadioButton segment_d;
     private RadioButton segment_p;
     private SeekBar rightSeekBar;
-    private TextView seekBarRightText;
 
-    private RadioButton ludacrisLaunch;
+
     private MaterialButton breakButton;
+    private MaterialButton launchButton;
     private TextView tvConnected;
 
     public static boolean deviceIsConnected = false;
@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
         init();
         callbacks();
         subscribeObservers();
-        connectMsg();
     }
 
 
@@ -103,18 +102,19 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
         buttonNormal = findViewById(R.id.buttonNormal);
         buttonLudacris = findViewById(R.id.buttonLudacris);
-        mode = findViewById(R.id.mode);
+//        mode = findViewById(R.id.mode);
         leftSeekBar = findViewById(R.id.leftSeekBar);
-        seekBarLeftText = findViewById(R.id.seekBarLeftText);
+//        seekBarLeftText = findViewById(R.id.seekBarLeftText);
 
         segment_r = findViewById(R.id.segment_r);
         segment_d = findViewById(R.id.segment_d);
         segment_p = findViewById(R.id.segment_p);
         rightSeekBar = findViewById(R.id.rightSeekBar);
-        seekBarRightText = findViewById(R.id.seekBarRightText);
+//        seekBarRightText = findViewById(R.id.seekBarRightText);
 
-        ludacrisLaunch = findViewById(R.id.ludacrisLaunch);
+//        ludacrisLaunch = findViewById(R.id.ludacrisLaunch);
         breakButton = findViewById(R.id.breakButton);
+        launchButton = findViewById(R.id.launchButton);
         tvConnected = findViewById(R.id.tvConnected);
 
 
@@ -135,19 +135,6 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
             Log.d(TAG, "device not connected: ");
             tvConnected.setText("disconnected");
         }
-//        remoteControl.sendCommandStr(input);
-//        HomeViewModel.connected.observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                if(aBoolean){
-//                    remoteControl.sendCommandStr(input);
-//                    Log.d(TAG, "sendCommand: input -> "  + input);
-//                } else {
-//                    Log.d(TAG, "onChanged: Device not available or connected");
-//                }
-//            }
-//        });
-
     }
 
 
@@ -191,15 +178,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
         HomeViewModel.init();
 
-//        HomeViewModel.connected.observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                if(aBoolean){
-//                    Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+
     }
 
     @Override
@@ -268,18 +247,50 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
         driverGearCallback();
         leftSeekBar();
         rightSeekBar();
-        ludacrisLaunch();
         setBreak();
+        launch();
 
     }
 
     private void setBreak() {
-        breakButton.setOnClickListener(view -> sendCommand("B1#"));
+        breakButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d(TAG, "onTouch: breeak button down");
+                    sendCommand("B1#");
+                } else   if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    Log.d(TAG, "onTouch: break button released");
+                    sendCommand("B0#");
+                }
+                return false;
+            }
+        });
+    }
+    private void launch(){
+        launchButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d(TAG, "onTouch: launch button down");
+                    sendCommand(String.format(
+                            "D%s%s%s#",
+                            HomeViewModel.driveGear.getValue(),
+                            HomeViewModel.driveMode.getValue(),
+                            "255") );
+                } else   if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    Log.d(TAG, "onTouch: launch button released");
+                    sendCommand(String.format(
+                            "D%s%s%s#",
+                            HomeViewModel.driveGear.getValue(),
+                            HomeViewModel.driveMode.getValue(),
+                            "0") );
+                }
+                return false;
+            }
+        });
     }
 
-    private void ludacrisLaunch() {
-        ludacrisLaunch.setOnClickListener(view -> HomeViewModel.driveGear.postValue(255));
-    }
 
 
     private void rightSeekBar() {
@@ -287,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 int currentValue = magRange(i, 0, 100, 0, 255);
-                seekBarRightText.setText(String.valueOf(currentValue));
+//                seekBarRightText.setText(String.valueOf(currentValue));
                 HomeViewModel.driverProgress.postValue(currentValue);
             }
 
@@ -298,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                rightSeekBar.setProgress(50);
+                rightSeekBar.setProgress(0);
             }
         });
 
@@ -309,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 int currentValue = magRange(i, 0, 100, 750, 2250);
-                seekBarLeftText.setText(String.valueOf(currentValue));
+//                seekBarLeftText.setText(String.valueOf(currentValue));
                 HomeViewModel.steerProgress.postValue(currentValue);
             }
 
@@ -320,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                leftSeekBar.setProgress(50);
+                leftSeekBar.setProgress(0);
             }
         });
     }
@@ -335,16 +346,14 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
         buttonNormal.setOnClickListener(view -> {
             HomeViewModel.driveMode.postValue(0);
             rightSeekBar.setVisibility(View.VISIBLE);
-            seekBarRightText.setVisibility(View.VISIBLE);
-            ludacrisLaunch.setVisibility(View.GONE);
-            mode.setText("0");
+//            seekBarRightText.setVisibility(View.VISIBLE);
+            launchButton.setVisibility(View.GONE);
         });
         buttonLudacris.setOnClickListener(view -> {
             HomeViewModel.driveMode.postValue(1);
             rightSeekBar.setVisibility(View.GONE);
-            seekBarRightText.setVisibility(View.GONE);
-            ludacrisLaunch.setVisibility(View.VISIBLE);
-            mode.setText("1");
+//            seekBarRightText.setVisibility(View.GONE);
+            launchButton.setVisibility(View.VISIBLE);
         });
     }
 
@@ -356,19 +365,19 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
     private void subscribeObservers(){
 
-       HomeViewModel.driveMode.observe(
-               this,
-               integer -> sendCommand(String.format(
-                       "D%s%s225#",
-                       HomeViewModel.driveGear.getValue(),
-                       HomeViewModel.driveMode.getValue())));
-
-        HomeViewModel.driveGear.observe(
-                this,
-                integer -> sendCommand(String.format(
-                        "D%s%s225#",
-                        HomeViewModel.driveGear.getValue(),
-                        HomeViewModel.driveMode.getValue())));
+//       HomeViewModel.driveMode.observe(
+//               this,
+//               integer -> sendCommand(String.format(
+//                       "D%s%s225#",
+//                       HomeViewModel.driveGear.getValue(),
+//                       HomeViewModel.driveMode.getValue())));
+//
+//        HomeViewModel.driveGear.observe(
+//                this,
+//                integer -> sendCommand(String.format(
+//                        "D%s%s225#",
+//                        HomeViewModel.driveGear.getValue(),
+//                        HomeViewModel.driveMode.getValue())));
 
         HomeViewModel.driverProgress.observe(
                 this,
@@ -385,20 +394,11 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
                         HomeViewModel.steerProgress.getValue())));
     }
 
-    private void connectMsg(){
-////        sendCommand();
-//        HomeViewModel.connected.observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                if(aBoolean){
-//                    tvConnected.setText("connected");
-//                } else {
-//                    tvConnected.setText("disconnected");
-//                }
-//            }
-//        });
-    }
+
 
 }
 
+/// on ludacris
+// on normal mode no  laucnch
+// down 255, 0
 
