@@ -231,7 +231,9 @@
             android:progressBackgroundTint="@color/white"
             android:progressDrawable="@drawable/seekbar_track"
             android:progressTint="@color/white"
-            android:thumb="@drawable/seekbar_thumb" />
+            android:thumb="@drawable/seekbar_thumb"
+
+            />
 
 
         <com.google.android.material.button.MaterialButton
@@ -239,7 +241,6 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:backgroundTint="@color/white"
             android:text="launch"
             android:textColor="#000"
