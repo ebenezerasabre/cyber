@@ -42,7 +42,7 @@
         android:text="Headlight"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
@@ -57,7 +57,7 @@
         android:text="taillight"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/light_head"
         app:layout_constraintStart_toStartOf="@+id/light_head"
         app:layout_constraintTop_toBottomOf="@+id/light_head" />
@@ -71,49 +71,42 @@
         android:text="interior"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/light_tail"
         app:layout_constraintStart_toStartOf="@+id/light_tail"
         app:layout_constraintTop_toBottomOf="@+id/light_tail" />
-
 
     <info.hoang8f.android.segmented.SegmentedGroup
         android:id="@+id/headSegment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/tailSegment"
         app:layout_constraintStart_toEndOf="@+id/light_head"
         app:layout_constraintTop_toTopOf="parent"
-        app:sc_border_width="2dp"
         app:sc_checked_text_color="@color/black"
         app:sc_corner_radius="8dp"
         app:sc_tint_color="@color/gray"
-
         >
-
         <RadioButton
             android:id="@+id/head1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="ON"
-            android:textSize="18sp" />
-
+            />
         <RadioButton
             android:id="@+id/head2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="OFF"
             android:textAllCaps="true"
-            android:textSize="18sp" />
-
-
+            />
     </info.hoang8f.android.segmented.SegmentedGroup>
 
     <info.hoang8f.android.segmented.SegmentedGroup
@@ -137,19 +130,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="ON"
-            android:textSize="18sp" />
+            />
 
         <RadioButton
             android:id="@+id/tail2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="OFF"
             android:textAllCaps="true"
-            android:textSize="18sp" />
+            />
 
 
     </info.hoang8f.android.segmented.SegmentedGroup>
@@ -177,17 +170,17 @@
             android:button="@null"
             android:padding="8dp"
             android:text="ON"
-            android:textSize="18sp" />
+            />
 
         <RadioButton
             android:id="@+id/interior2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="OFF"
             android:textAllCaps="true"
-            android:textSize="18sp" />
+            />
     </info.hoang8f.android.segmented.SegmentedGroup>
 
 

@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements BLEControllerList
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                leftSeekBar.setProgress(0);
+                leftSeekBar.setProgress(50);
             }
         });
     }
